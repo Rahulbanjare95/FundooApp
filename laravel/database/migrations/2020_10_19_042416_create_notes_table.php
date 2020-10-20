@@ -25,11 +25,9 @@ class CreateNotesTable extends Migration
             $table->boolean('ispinned')->default(false);
       
             $table->boolean('isarchived')->default(false);
-       
-            $table->boolean('istrash')->default(false);
-        
-            $table->unsignedBigInteger('index');
     
+            $table->boolean('istrash')->default(false);
+
             $table->foreign('userid')->references('id')->on('users')->onDelete('cascade');
                 
             $table->timestamps();
