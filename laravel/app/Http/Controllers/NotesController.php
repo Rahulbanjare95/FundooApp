@@ -17,6 +17,11 @@ class NotesController extends Controller
         $this->user = auth()->user();   
     }
 
+    public function getAllNotes(){
+        $notes = $this->user->notes()->get(['id', 'title', 'description', 'userid', 'ispinned','isarchived','istrash']);
+        return response()->json($notes->toArray());
+
+    }
     public function createNote(Request $request)
     {
         $validator = Validator::make(
@@ -71,5 +76,16 @@ class NotesController extends Controller
         return response()->json(['message' => 'Unauthorized note ID'], 404);
     }
     }
+
+    public function deleteNotes(Request $request) {
+        $find = Notes::find($request['id']);
+        if ($find) {
+            $find = Notes::find($request['id'])->delete();
+            return response()->json(['message' => 'Note Deleted Successfully'],200);
+        } else {
+            return response()->json(['message' => 'Note Id Invalid'],404);
+        }
+    }
+
 
 }
