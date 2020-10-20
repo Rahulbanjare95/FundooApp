@@ -57,7 +57,19 @@ class NotesController extends Controller
                 ]
             );
         }
+    }
 
+    public function update(Request $request){
+       $note = Notes::find($request->id);
+       if($note != null){
+            $note->title = $request['title'];
+            $note->description = $request['description'];
+            $note->save();
+            return response()->json(['message'=>'Note Update sucessfully'],200);
+       }
+       else {
+        return response()->json(['message' => 'Unauthorized note ID'], 404);
+    }
     }
 
 }
